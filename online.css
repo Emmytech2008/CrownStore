@@ -443,7 +443,7 @@ nav a:hover {
   background-position: center;
   background-size: cover;
   margin-top: 60px;
-  margin-bottom: 30px;
+  /* margin-bottom: 30px; */
   display: flex;
   align-items: center;
   padding: 30px 20px;
