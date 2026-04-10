@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CrownCart Product Page</title>
+    <link rel="stylesheet" href="online.css">
+</head>
+
+
+<body>
+     <header>
+        <div class="crownhead">
+        <img src="images/crownlogo.png" alt="">
+        <h1>CrownCart Store</h1>
+        </div>
+        <nav>
+            <ul>
+                <a href="index.html"><li>Home</li></a>
+                <a href="product.html"><li>Product</li></a>
+                <a href="about.html"><li>About</li></a>
+                <a href="cart.html"><li>Cart</li></a>
+            </ul>
+        </nav>
+        <input type="search" placeholder="search" class="search">
+        <button class="sign">Sign In</button>
+        <button class="sign">Sign Up</button>
+        <div class="cart-icon" onclick="goToCart()">
+    🛒 <span id="cart-count">0</span>
+</div>
+<button class="hamburger" onclick="this.closest('header').querySelector('nav').classList.toggle('open')">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+    </header>
+
+<input type="text" id="searchBox" placeholder="Search for products..." onkeyup="searchProduct()">
+
+<div class="products" id="productList"></div>
+
+<div class="exp">
+    <h1>Explore, Shop, Repeat.</h1>
+    <div>
+    <p>CrownCart Store is the driving force behind the dreams of emerging entrepreneurs and a trusted partner for industry leaders</p>
+    </div>
+    <section>
+    <button>Shop Now</button>    
+    </section>
+</div>
+<section class="Phones">
+<h1>PHONES</h1>
+<main class="mainto">
+     <div class="to">
+            <img src="images/iphone16.png" alt="">
+            <h5>Iphone 16 Pro Max</h5>
+            <p>#1,500,000</p>
+            <button onclick="addToCart('iphone16 Pro Max', 1500000, 'images/iphone16.png')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/Samsungs26.png" alt="">
+            <h5>Samsung S26 Ultra</h5>
+            <p>#2,000,000</p>
+            <button onclick="addToCart('Samsung S26 Ultra', 2000000, 'images/Samsungs26.png')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/REDMI15C.png" alt="">
+            <h5>Xiaomi Redme 15c</h5>
+            <p>#150,000</p>
+            <button onclick="addToCart('Xiaomi Redme 15c', 150000, 'images/REDMI15C.png')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/GalaxyA06.png" alt="">
+            <h5>Samsung A06</h5>
+            <p>#120,000</p>
+           <button onclick="addToCart('Samsung A06', 120000, 'images/GalaxyA06.png')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/ItelA100C.png" alt="">
+            <h5>Itel A100C</h5>
+            <p>#145,000</p>
+         <button onclick="addToCart('Itel A100C<', 145000, 'images/ItelA100C.png')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/TecnoPop8.png" alt="">
+            <h5>Tecno Pop 10C</h5>
+            <p>#130,000</p>
+           <button onclick="addToCart('Tecno Pop 10C', 130000, 'images/TecnoPop8.png')">
+Add to Cart
+</button>
+        </div>
+</main>
+
+<h1>CLOTHES</h1>
+<main class="mainto">
+     <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+          <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+          <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+</main>
+
+<h1>SHOES</h1>
+<main class="mainto">
+     <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+          <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+          <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+</main>
+
+<h1>LAPTOPS</h1>
+<main class="mainto">
+     <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button>Add To Cart</button>
+        </div>
+</main>
+
+<h1>PHONES ACCESSORIES</h1>
+<main class="mainto">
+     <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+</main>
+
+<h1>LAPTOP ACCESSORIES</h1>
+<main class="mainto">
+     <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+          <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+</main>
+
+<h1>KITCHEN APPLIANCES</h1>
+<main class="mainto">
+     <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+          <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+            <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+         <div class="to">
+            <img src="images/download.png" alt="">
+            <p>#150,000</p>
+           <button onclick="addToCart('Linen Shirt', 12000, 'https://via.placeholder.com/80')">
+Add to Cart
+</button>
+        </div>
+</main>
+</section>
+
+<div class="marquee">
+  <div class="marquee-content">
+    🔥 Big Sale! Up to 50% Off &nbsp;&nbsp; | &nbsp;&nbsp;
+    🚚 Free Delivery on Orders Above ₦20,000 &nbsp;&nbsp; | &nbsp;&nbsp;
+    💳 Pay on Delivery Available &nbsp;&nbsp; | &nbsp;&nbsp;
+    🛒 New Arrivals Just Dropped!
+  </div>
+</div>
+
+
+<script>
+function addToCart(name, price, image) {
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart.push({
+        name: name,
+        price: price,
+        image: image,
+        quantity: 1
+    });
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Added to cart");
+}
+
+function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let totalItems = 0;
+
+    cart.forEach(item => {
+        totalItems += item.quantity;
+    });
+
+    document.getElementById("cart-count").innerText = totalItems;
+}
+
+function goToCart() {
+    window.location.href = "cart.html";
+}
+
+// Run on page load
+updateCartCount();
+</script>
+
+
+</body>
+</html>

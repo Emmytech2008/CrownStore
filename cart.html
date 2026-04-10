@@ -1,0 +1,183 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Cart Page</title>
+<link rel="stylesheet" href="online.css">
+</head>
+
+<body>
+      <header>
+        <div class="crownhead">
+        <img src="images/crownlogo.png" alt="">
+        <h1>CrownCart Store</h1>
+        </div>
+        <nav>
+            <ul>
+                <a href="index.html"><li>Home</li></a>
+                <a href="product.html"><li>Product</li></a>
+                <a href="about.html"><li>About</li></a>
+                <a href="cart.html"><li>Cart</li></a>
+            </ul>
+        </nav>
+        <input type="search" placeholder="search" class="search">
+        <button class="sign">Sign In</button>
+        <button class="sign">Sign Up</button>
+        <div class="cart-icon" onclick="goToCart()">
+    🛒 <span id="cart-count">0</span>
+</div>
+<button class="hamburger" onclick="this.closest('header').querySelector('nav').classList.toggle('open')">
+  <span></span>
+  <span></span>
+  <span></span>
+</button>
+    </header>
+
+<div class="container">
+
+    <!-- CART ITEMS -->
+   <div class="cart" id="cart"></div>
+
+
+
+    <!-- SUMMARY -->
+    <div class="summary">
+        <h3>Order Summary</h3>
+        <p><span>Subtotal</span> <span id="subtotal">₦0</span></p>
+        <p><span>Delivery</span> <span>₦2,000</span></p>
+        <p class="total"><span>Total</span> <span id="total">₦0</span></p>
+
+       <button class="checkout" onclick="checkoutWhatsApp()">
+Order via WhatsApp
+</button>
+    </div>
+
+</div>
+
+
+ <div class="lastdiv">
+            <h1>Get Up To 50% CashBack <br>On Your First Purchase </h1>
+        </div>
+
+<script>
+function loadCart() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    let cartBox = document.getElementById("cart");
+
+    cartBox.innerHTML = "";
+
+    if (cart.length === 0) {
+        cartBox.innerHTML = "<h3>Your cart is empty 🛒</h3>";
+        document.getElementById("subtotal").innerText = "₦0";
+        document.getElementById("total").innerText = "₦0";
+        return;
+    }
+
+    let subtotal = 0;
+
+    cart.forEach((item, index) => {
+        subtotal += item.price * item.quantity;
+
+        cartBox.innerHTML += `
+        <div class="cart-item">
+            <img src="${item.image}">
+            <div class="info">
+                <h4>${item.name}</h4>
+                <p class="price">₦${item.price}</p>
+
+                <div class="qty">
+                    <button onclick="changeQty(${index}, -1)">-</button>
+                    <span>${item.quantity}</span>
+                    <button onclick="changeQty(${index}, 1)">+</button>
+                </div>
+
+                <p class="remove" onclick="removeItem(${index})">Remove</p>
+            </div>
+        </div>
+        `;
+    });
+
+    document.getElementById("subtotal").innerText =
+        "₦" + subtotal.toLocaleString();
+
+    document.getElementById("total").innerText =
+        "₦" + (subtotal + 2000).toLocaleString();
+}
+
+// INCREASE / DECREASE
+function changeQty(index, change) {
+    let cart = JSON.parse(localStorage.getItem("cart"));
+
+    cart[index].quantity += change;
+
+    if (cart[index].quantity <= 0) {
+        cart.splice(index, 1);
+    }
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+}
+
+// REMOVE ITEM
+function removeItem(index) {
+    let cart = JSON.parse(localStorage.getItem("cart"));
+
+    cart.splice(index, 1);
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+    loadCart();
+}
+
+// LOAD ON PAGE OPEN
+loadCart();
+
+
+function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let totalItems = 0;
+
+    cart.forEach(item => {
+        totalItems += item.quantity;
+    });
+
+    document.getElementById("cart-count").innerText = totalItems;
+}
+
+function goToCart() {
+    window.location.href = "cart.html";
+}
+
+// Run on page load
+updateCartCount();
+
+
+function checkoutWhatsApp() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    if (cart.length === 0) {
+        alert("Your cart is empty");
+        return;
+    }
+
+    let message = "Hello, I want to order:%0A%0A";
+
+    let total = 0;
+
+    cart.forEach(item => {
+        message += `${item.name} - ₦${item.price} x ${item.quantity}%0A`;
+        total += item.price * item.quantity;
+    });
+
+    message += `%0ATotal: ₦${total}`;
+
+    let phoneNumber = "2347078709384"; // 👉 PUT YOUR NUMBER HERE
+
+    let url = `https://wa.me/${2347078709384}?text=${message}`;
+
+    window.open(url, "_blank");
+}
+</script>
+</body>
+</html>
