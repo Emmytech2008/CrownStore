@@ -69,7 +69,9 @@
             <img src="cross.png" alt="">
             <h6>Cross Necklace</h6>
             <p>#2,000 - #5,000</p>
-            <button>Add To Cart</button>
+            <button onclick="addToCart('Cross Necklace', 2500, 'cross.png')">
+Add to Cart
+</button>
         </div>
          <div class="top">
             <img src="images/download.png" alt="">
@@ -93,6 +95,42 @@
         <div class="lastdiv">
             <h1>Get Up To 50% CashBack <br>On Your First Purchase </h1>
         </div>
+    <script>
+function addToCart(name, price, image) {
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    cart.push({
+        name: name,
+        price: price,
+        image: image,
+        quantity: 1
+    });
+
+    localStorage.setItem("cart", JSON.stringify(cart));
+
+    alert("Added to cart");
+}
+
+function updateCartCount() {
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+
+    let totalItems = 0;
+
+    cart.forEach(item => {
+        totalItems += item.quantity;
+    });
+
+    document.getElementById("cart-count").innerText = totalItems;
+}
+
+function goToCart() {
+    window.location.href = "cart.html";
+}
+
+// Run on page load
+updateCartCount();
+</script>
     
 </body>
 </html>
