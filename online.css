@@ -243,8 +243,8 @@ nav a:hover {
 /* ===== PRODUCT GRIDS ===== */
 .maintop {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
-  gap: 20px;
+  grid-template-columns: repeat(6, 1fr);
+  gap: 16px;
   padding: 30px 20px;
 }
 
@@ -746,12 +746,17 @@ footer {
 }
 
   /* Product grids go to 2 columns on small screens */
-  .maintop,
-  .mainto {
-    grid-template-columns: repeat(2, 1fr);
-    padding: 12px;
-    gap: 12px;
-  }
+.maintop {
+  grid-template-columns: repeat(3, 1fr);
+  padding: 12px;
+  gap: 12px;
+}
+
+.mainto {
+  grid-template-columns: repeat(2, 1fr);
+  padding: 12px;
+  gap: 12px;
+}
 
   /* Cart page */
   .container {
@@ -781,7 +786,11 @@ footer {
 }
 
 @media (max-width: 420px) {
-  .maintop,
+.maintop {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 8px;
+}
   .mainto {
     grid-template-columns: 1fr 1fr;
     gap: 8px;
