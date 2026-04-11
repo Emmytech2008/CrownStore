@@ -30,6 +30,9 @@
   <span></span>
 </button>
     </header>
+    <div id="welcome-banner" style="display:none; background:#0D1B4B; color:#F5A623; 
+     text-align:center; padding:10px; font-weight:bold; font-size:15px;">
+</div>
     <div class="crownback">
         <div>
         <h1>Shopping and <br>Department Store.</h1>
@@ -172,7 +175,12 @@ updateCartCount();
     alert("Added to cart!");
     updateCartCount();
 }
-
+const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+if (loggedInUser) {
+    const banner = document.getElementById("welcome-banner");
+    banner.style.display = "block";
+    banner.textContent = `👋 Welcome back, ${loggedInUser.name}! Check out today's deals.`;
+}
 </script>
     
 </body>
