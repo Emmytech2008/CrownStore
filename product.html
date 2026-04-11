@@ -437,6 +437,22 @@ updateCartCount();
         localStorage.removeItem("loggedInUser");
         location.reload();
     }
+    function addToCart(name, price, image) {
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    
+    // Block if not logged in
+    if (!loggedInUser) {
+        alert("Please sign in to add items to your cart.");
+        window.location.href = "signin.html";
+        return;
+    }
+
+    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    cart.push({ name, price, image, quantity: 1 });
+    localStorage.setItem("cart", JSON.stringify(cart));
+    alert("Added to cart!");
+    updateCartCount();
+}
 </script>
 
 
