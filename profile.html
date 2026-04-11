@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Profile - CrownCart</title>
+    <link rel="stylesheet" href="online.css">
+</head>
+<body>
+    <header>
+        <div class="crownhead">
+            <img src="images/crownlogo.png" alt="">
+            <h1>CrownCart Store</h1>
+        </div>
+        <nav>
+            <ul>
+                <a href="index.html"><li>Home</li></a>
+                <a href="product.html"><li>Product</li></a>
+                <a href="about.html"><li>About</li></a>
+                <a href="cart.html"><li>Cart</li></a>
+            </ul>
+        </nav>
+        <button class="hamburger" onclick="this.closest('header').querySelector('nav').classList.toggle('open')">
+            <span></span><span></span><span></span>
+        </button>
+    </header>
+
+    <!-- PROFILE INFO -->
+    <div class="profile-container">
+        <div class="profile-box">
+            <div class="profile-avatar">👤</div>
+            <h2 id="profile-name"></h2>
+            <p id="profile-email"></p>
+            <button onclick="logout()" class="logout-btn">Logout</button>
+        </div>
+
+        <!-- ORDER HISTORY -->
+        <div class="orders-box">
+            <h2>My Orders</h2>
+            <div id="orders-list"></div>
+        </div>
+    </div>
+
+<script>
+    // Redirect if not logged in
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (!loggedInUser) {
+        alert("Please sign in to view your profile.");
+        window.location.href = "signin.html";
+    }
+
+    // Show profile info
+    document.getElementById("profile-name").textContent = loggedInUser.name;
+    document.getElementById("profile-email").textContent = loggedInUser.email;
+
+    // Load orders
+    const orderKey = "orders_" + loggedInUser.email;
+    const orders = JSON.parse(localStorage.getItem(orderKey)) || [];
+    const ordersList = document.getElementById("orders-list");
+
+    if (orders.length === 0) {
+        ordersList.innerHTML = "<p class='no-orders'>You have no orders yet.</p>";
+    } else {
+        // Show newest first
+        [...orders].reverse().forEach(order => {
+            let itemsHTML = order.items.map(item =>
+                `<p>• ${item.name} x${item.quantity} — ₦${item.price.toLocaleString()}</p>`
+            ).join("");
+
+            ordersList.innerHTML += `
+            <div class="order-card">
+                <div class="order-header">
+                    <span>📦 Order #${order.id}</span>
+                    <span class="order-status">${order.status}</span>
+                </div>
+                <p class="order-date">📅 ${order.date}</p>
+                ${itemsHTML}
+                <p class="order-total">Total: ₦${order.total.toLocaleString()}</p>
+            </div>`;
+        });
+    }
+
+    function logout() {
+        localStorage.removeItem("loggedInUser");
+        window.location.href = "index.html";
+    }
+</script>
+</body>
+</html>
