@@ -753,7 +753,7 @@ footer {
 }
 
 .mainto {
-  grid-template-columns: repeat(2, 1fr);
+  grid-template-columns: repeat(3, 1fr);
   padding: 12px;
   gap: 12px;
 }
@@ -791,11 +791,12 @@ footer {
   gap: 8px;
   padding: 8px;
 }
-  .mainto {
-    grid-template-columns: 1fr 1fr;
-    gap: 8px;
-    padding: 8px;
-  }
+
+.mainto {
+  grid-template-columns: repeat(2, 1fr);
+  gap: 8px;
+  padding: 8px;
+}
 
   .to img,
   .top img {
