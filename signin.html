@@ -50,6 +50,31 @@
             alert("Welcome back, " + user.name + "!");
             window.location.href = "index.html";
         }
+
+        function signIn() {
+    const email = document.getElementById("email").value.trim();
+    const password = document.getElementById("password").value;
+
+    if (!email || !password) {
+        alert("Please fill in all fields.");
+        return;
+    }
+
+    const users = JSON.parse(localStorage.getItem("users")) || [];
+    const user = users.find(u => u.email === email && u.password === password);
+
+    if (!user) {
+        alert("Invalid email or password.");
+        return;
+    }
+
+    localStorage.setItem("loggedInUser", JSON.stringify(user));
+    
+    // Go back to previous page or homepage
+    const redirect = localStorage.getItem("redirectAfterLogin") || "index.html";
+    localStorage.removeItem("redirectAfterLogin");
+    window.location.href = redirect;
+}
     </script>
 </body>
 </html>
