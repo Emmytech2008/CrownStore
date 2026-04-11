@@ -92,7 +92,22 @@
 <footer>
     <p>© 2026 CrownCart. All rights reserved.</p>
 </footer>
+<script>
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    if (loggedInUser) {
+        document.querySelectorAll(".sign").forEach(btn => btn.style.display = "none");
+        const header = document.querySelector("header");
+        const greeting = document.createElement("span");
+        greeting.style.cssText = "color:#F5A623; font-weight:bold; font-size:14px;";
+        greeting.innerHTML = `👤 ${loggedInUser.name} | <a href="#" onclick="logout()" style="color:#E63946;">Logout</a>`;
+        header.appendChild(greeting);
+    }
 
-
-</html>
+    function logout() {
+        localStorage.removeItem("loggedInUser");
+        location.reload();
+    }
+</script>
 </body>
+</html>
+
