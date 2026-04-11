@@ -209,6 +209,13 @@ function addToCart(name, price, image) {
     alert("Added to cart!");
     updateCartCount();
 }
+
+      // Redirect to signin if not logged in
+const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+if (!loggedInUser) {
+    alert("Please sign in to view your cart.");
+    window.location.href = "signin.html";
+}
 </script>
 </body>
 </html>
