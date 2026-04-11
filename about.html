@@ -99,7 +99,7 @@
         const header = document.querySelector("header");
         const greeting = document.createElement("span");
         greeting.style.cssText = "color:#F5A623; font-weight:bold; font-size:14px;";
-        greeting.innerHTML = `👤 ${loggedInUser.name} | <a href="#" onclick="logout()" style="color:#E63946;">Logout</a>`;
+       greeting.innerHTML = `<a href="profile.html" style="color:#F5A623; font-weight:bold;">👤 ${loggedInUser.name}</a> | <a href="#" onclick="logout()" style="color:#E63946;">Logout</a>`;
         header.appendChild(greeting);
     }
 
