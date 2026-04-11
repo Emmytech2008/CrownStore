@@ -216,6 +216,13 @@ if (!loggedInUser) {
     alert("Please sign in to view your cart.");
     window.location.href = "signin.html";
 }
+
+      if (!loggedInUser) {
+    localStorage.setItem("redirectAfterLogin", window.location.href);
+    alert("Please sign in to add items to your cart.");
+    window.location.href = "signin.html";
+    return;
+}
 </script>
 </body>
 </html>
