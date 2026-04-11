@@ -143,7 +143,7 @@ function goToCart() {
 updateCartCount();
 
     // Show logged in user in header
-  <script>
+
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
     if (loggedInUser) {
         document.querySelectorAll(".sign").forEach(btn => btn.style.display = "none");
@@ -158,7 +158,7 @@ updateCartCount();
         localStorage.removeItem("loggedInUser");
         location.reload();
     }
-</script>
+
 </script>
     
 </body>
