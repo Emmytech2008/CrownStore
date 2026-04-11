@@ -183,13 +183,54 @@ if (loggedInUser) {
     const header = document.querySelector("header");
     const greeting = document.createElement("span");
     greeting.style.cssText = "color:#F5A623; font-weight:bold; font-size:14px;";
-    greeting.innerHTML = `👤 ${loggedInUser.name} | <a href="#" onclick="logout()" style="color:#E63946;">Logout</a>`;
+  greeting.innerHTML = `<a href="profile.html" style="color:#F5A623; font-weight:bold;">👤 ${loggedInUser.name}</a> | <a href="#" onclick="logout()" style="color:#E63946;">Logout</a>`;
     header.appendChild(greeting);
 }
 
 // ===== RUN ON LOAD =====
 loadCart();
 updateCartCount();
+
+      function checkoutWhatsApp() {
+    if (!loggedInUser) {
+        alert("Please sign in to place an order.");
+        localStorage.setItem("redirectAfterLogin", window.location.href);
+        window.location.href = "signin.html";
+        return;
+    }
+
+    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+    if (cart.length === 0) { alert("Your cart is empty"); return; }
+
+    // ===== SAVE ORDER TO HISTORY =====
+    const orderKey = "orders_" + loggedInUser.email;
+    let orders = JSON.parse(localStorage.getItem(orderKey)) || [];
+
+    const newOrder = {
+        id: Date.now(),
+        date: new Date().toLocaleDateString(),
+        items: cart,
+        total: cart.reduce((sum, item) => sum + item.price * item.quantity, 0) + 2000,
+        status: "Pending"
+    };
+
+    orders.push(newOrder);
+    localStorage.setItem(orderKey, JSON.stringify(orders));
+
+    // ===== CLEAR CART AFTER ORDER =====
+    localStorage.removeItem(cartKey);
+
+    // ===== SEND TO WHATSAPP =====
+    let message = "Hello, I want to order:%0A%0A";
+    cart.forEach(item => {
+        message += `${item.name} - ₦${item.price.toLocaleString()} x ${item.quantity}%0A`;
+    });
+    message += `%0ATotal: ₦${newOrder.total.toLocaleString()}`;
+    window.open(`https://wa.me/2347078709384?text=${message}`, "_blank");
+
+    loadCart();
+    updateCartCount();
+}
 </script>
 </body>
 </html>
