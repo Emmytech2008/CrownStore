@@ -23,6 +23,7 @@
         <input type="search" placeholder="search" class="search">
         <button class="sign" onclick="window.location.href='signin.html'">Sign In</button>
 <button class="sign" onclick="window.location.href='signup.html'">Sign Up</button>
+        <div class="cart-icon" onclick="goToCart()">🛒 <span id="cart-count">0</span></div>
         <button class="hamburger" onclick="this.closest('header').querySelector('nav').classList.toggle('open')">
   <span></span>
   <span></span>
@@ -128,10 +129,6 @@ function updateCartCount() {
     });
 
     document.getElementById("cart-count").innerText = totalItems;
-}
-
-function goToCart() {
-    window.location.href = "cart.html";
 }
 
 // Run on page load
