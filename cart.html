@@ -223,6 +223,13 @@ if (!loggedInUser) {
     window.location.href = "signin.html";
     return;
 }
+      // Save cart per user
+const cartKey = "cart_" + loggedInUser.email;
+let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+cart.push({ name, price, image, quantity: 1 });
+localStorage.setItem(cartKey, JSON.stringify(cart));
+      const cartKey = "cart_" + loggedInUser.email;
+let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
 </script>
 </body>
 </html>
