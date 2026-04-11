@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Sign Up - CrownCart</title>
+    <link rel="stylesheet" href="online.css">
+</head>
+<body>
+    <header>
+        <div class="crownhead">
+            <img src="images/crownlogo.png" alt="">
+            <h1>CrownCart Store</h1>
+        </div>
+    </header>
+
+    <div class="auth-container">
+        <div class="auth-box">
+            <h2>Create Account</h2>
+            <p class="auth-sub">Join CrownCart today</p>
+
+            <input type="text" id="fullname" placeholder="Full Name">
+            <input type="email" id="email" placeholder="Email Address">
+            <input type="password" id="password" placeholder="Password">
+            <input type="password" id="confirm" placeholder="Confirm Password">
+
+            <button onclick="signUp()">Sign Up</button>
+            <p class="auth-switch">Already have an account? <a href="signin.html">Sign In</a></p>
+        </div>
+    </div>
+
+    <script>
+        function signUp() {
+            const name = document.getElementById("fullname").value.trim();
+            const email = document.getElementById("email").value.trim();
+            const password = document.getElementById("password").value;
+            const confirm = document.getElementById("confirm").value;
+
+            if (!name || !email || !password || !confirm) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            if (password !== confirm) {
+                alert("Passwords do not match.");
+                return;
+            }
+
+            if (password.length < 6) {
+                alert("Password must be at least 6 characters.");
+                return;
+            }
+
+            // Check if email already exists
+            const users = JSON.parse(localStorage.getItem("users")) || [];
+            const exists = users.find(u => u.email === email);
+            if (exists) {
+                alert("An account with this email already exists.");
+                return;
+            }
+
+            // Save user
+            users.push({ name, email, password });
+            localStorage.setItem("users", JSON.stringify(users));
+
+            alert("Account created successfully! Please sign in.");
+            window.location.href = "signin.html";
+        }
+    </script>
+</body>
+</html>
