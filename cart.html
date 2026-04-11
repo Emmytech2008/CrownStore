@@ -48,9 +48,21 @@
         <p><span>Delivery</span> <span>₦2,000</span></p>
         <p class="total"><span>Total</span> <span id="total">₦0</span></p>
 
-       <button class="checkout" onclick="checkoutWhatsApp()">
-Order via WhatsApp
+      <button class="checkout" onclick="checkoutWhatsApp()">
+    🔒 Order via WhatsApp
 </button>
+
+<!-- Show this message to guests -->
+<p id="login-notice" style="
+    color: #E63946; 
+    font-size: 13px; 
+    text-align: center; 
+    margin-top: 10px;
+    display: none;">
+    You must <a href="signin.html" style="color:#F5A623;">sign in</a> to place an order.
+</p>
+
+
     </div>
 
 </div>
@@ -61,15 +73,13 @@ Order via WhatsApp
         </div>
 
 <script>
-// ===== PROTECT CART PAGE =====
+        // Show notice if guest
+    if (!JSON.parse(localStorage.getItem("loggedInUser"))) {
+        document.getElementById("login-notice").style.display = "block";
+    }
+// ===== CART KEY =====
 const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-if (!loggedInUser) {
-    alert("Please sign in to view your cart.");
-    window.location.href = "signin.html";
-}
-
-// ===== CART KEY PER USER =====
-const cartKey = loggedInUser ? "cart_" + loggedInUser.email : "cart";
+const cartKey = loggedInUser ? "cart_" + loggedInUser.email : "cart_guest";
 
 // ===== LOAD CART =====
 function loadCart() {
@@ -140,6 +150,14 @@ function goToCart() {
 
 // ===== WHATSAPP CHECKOUT =====
 function checkoutWhatsApp() {
+    // Block if not logged in
+    if (!loggedInUser) {
+        alert("Please sign in to place an order.");
+        localStorage.setItem("redirectAfterLogin", window.location.href);
+        window.location.href = "signin.html";
+        return;
+    }
+
     let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
     if (cart.length === 0) { alert("Your cart is empty"); return; }
 
@@ -153,12 +171,13 @@ function checkoutWhatsApp() {
     window.open(`https://wa.me/2347078709384?text=${message}`, "_blank");
 }
 
-// ===== HEADER GREETING =====
+// ===== LOGOUT =====
 function logout() {
     localStorage.removeItem("loggedInUser");
     location.reload();
 }
 
+// ===== HEADER GREETING =====
 if (loggedInUser) {
     document.querySelectorAll(".sign").forEach(btn => btn.style.display = "none");
     const header = document.querySelector("header");
