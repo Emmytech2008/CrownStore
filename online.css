@@ -685,30 +685,24 @@ footer {
 /* ===== MOBILE RESPONSIVE ===== */
 @media (max-width: 768px) {
 
-  /* Header stays as a single compact row */
+  /* Header stacks on mobile */
   header {
-    flex-direction: row;
-    align-items: center;
-    padding: 10px 16px;
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 16px;
     gap: 8px;
-    flex-wrap: nowrap;
-  }
-
-  /* Hide search and sign buttons on mobile (hamburger menu handles nav) */
-  .search,
-  .sign {
-    display: none;
   }
 
   .hamburger {
     display: flex;
-    position: static; /* remove absolute positioning */
-    margin-left: auto;
+    position: absolute;
+    top: 18px;
+    right: 16px;
   }
 
   nav {
-    display: none;
     width: 100%;
+    display: none;
   }
 
   nav.open {
@@ -729,11 +723,19 @@ footer {
     border-bottom: 1px solid rgba(255,255,255,0.1);
   }
 
-  /* Hero — use min-height with dvh to avoid gap */
+  .search {
+    width: 100%;
+  }
+
+  .sign {
+    width: 100%;
+    text-align: center;
+  }
+
+  /* Hero */
   .crownback {
-    min-height: 70dvh;
+    min-height: 60vh;
     padding: 30px 16px;
-    justify-content: flex-end; /* anchor content to bottom of image */
   }
 
   .crownback div {
