@@ -387,74 +387,60 @@ Add to Cart
 
 
 <script>
-function addToCart(name, price, image) {
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    cart.push({
-        name: name,
-        price: price,
-        image: image,
-        quantity: 1
-    });
-
-    localStorage.setItem("cart", JSON.stringify(cart));
-
-    alert("Added to cart");
-}
-
+// ===== CART COUNT =====
 function updateCartCount() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
+    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+    const cartKey = loggedInUser ? "cart_" + loggedInUser.email : "cart";
+    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
     let totalItems = 0;
-
-    cart.forEach(item => {
-        totalItems += item.quantity;
-    });
-
+    cart.forEach(item => totalItems += item.quantity);
     document.getElementById("cart-count").innerText = totalItems;
 }
 
+// ===== GO TO CART =====
 function goToCart() {
     window.location.href = "cart.html";
 }
 
-// Run on page load
-updateCartCount();
-
-    // Show logged in user in header
+// ===== ADD TO CART =====
+function addToCart(name, price, image) {
     const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    if (loggedInUser) {
-        document.querySelectorAll(".sign").forEach(btn => btn.style.display = "none");
-        const header = document.querySelector("header");
-        const greeting = document.createElement("span");
-        greeting.style.cssText = "color:#F5A623; font-weight:bold; font-size:14px;";
-        greeting.innerHTML = `👤 ${loggedInUser.name} | <a href="#" onclick="logout()" style="color:#E63946;">Logout</a>`;
-        header.appendChild(greeting);
-    }
 
-    function logout() {
-        localStorage.removeItem("loggedInUser");
-        location.reload();
-    }
-    function addToCart(name, price, image) {
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    
-    // Block if not logged in
     if (!loggedInUser) {
+        localStorage.setItem("redirectAfterLogin", window.location.href);
         alert("Please sign in to add items to your cart.");
         window.location.href = "signin.html";
         return;
     }
 
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
+    const cartKey = "cart_" + loggedInUser.email;
+    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
     cart.push({ name, price, image, quantity: 1 });
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem(cartKey, JSON.stringify(cart));
     alert("Added to cart!");
     updateCartCount();
 }
-</script>
 
+// ===== LOGOUT =====
+function logout() {
+    localStorage.removeItem("loggedInUser");
+    location.reload();
+}
+
+// ===== ON PAGE LOAD =====
+const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+
+if (loggedInUser) {
+    document.querySelectorAll(".sign").forEach(btn => btn.style.display = "none");
+    const header = document.querySelector("header");
+    const greeting = document.createElement("span");
+    greeting.style.cssText = "color:#F5A623; font-weight:bold; font-size:14px;";
+    greeting.innerHTML = `👤 ${loggedInUser.name} | <a href="#" onclick="logout()" style="color:#E63946;">Logout</a>`;
+    header.appendChild(greeting);
+}
+
+updateCartCount();
+</script>
 
 </body>
 </html>
