@@ -61,10 +61,20 @@ Order via WhatsApp
         </div>
 
 <script>
-function loadCart() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    let cartBox = document.getElementById("cart");
+// ===== PROTECT CART PAGE =====
+const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
+if (!loggedInUser) {
+    alert("Please sign in to view your cart.");
+    window.location.href = "signin.html";
+}
 
+// ===== CART KEY PER USER =====
+const cartKey = loggedInUser ? "cart_" + loggedInUser.email : "cart";
+
+// ===== LOAD CART =====
+function loadCart() {
+    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+    let cartBox = document.getElementById("cart");
     cartBox.innerHTML = "";
 
     if (cart.length === 0) {
@@ -75,73 +85,52 @@ function loadCart() {
     }
 
     let subtotal = 0;
-
     cart.forEach((item, index) => {
         subtotal += item.price * item.quantity;
-
         cartBox.innerHTML += `
         <div class="cart-item">
             <img src="${item.image}">
             <div class="info">
                 <h4>${item.name}</h4>
-                <p class="price">₦${item.price}</p>
-
+                <p class="price">₦${item.price.toLocaleString()}</p>
                 <div class="qty">
                     <button onclick="changeQty(${index}, -1)">-</button>
                     <span>${item.quantity}</span>
                     <button onclick="changeQty(${index}, 1)">+</button>
                 </div>
-
                 <p class="remove" onclick="removeItem(${index})">Remove</p>
             </div>
-        </div>
-        `;
+        </div>`;
     });
 
-    document.getElementById("subtotal").innerText =
-        "₦" + subtotal.toLocaleString();
-
-    document.getElementById("total").innerText =
-        "₦" + (subtotal + 2000).toLocaleString();
+    document.getElementById("subtotal").innerText = "₦" + subtotal.toLocaleString();
+    document.getElementById("total").innerText = "₦" + (subtotal + 2000).toLocaleString();
 }
 
-// INCREASE / DECREASE
+// ===== CHANGE QUANTITY =====
 function changeQty(index, change) {
-    let cart = JSON.parse(localStorage.getItem("cart"));
-
+    let cart = JSON.parse(localStorage.getItem(cartKey));
     cart[index].quantity += change;
-
-    if (cart[index].quantity <= 0) {
-        cart.splice(index, 1);
-    }
-
-    localStorage.setItem("cart", JSON.stringify(cart));
+    if (cart[index].quantity <= 0) cart.splice(index, 1);
+    localStorage.setItem(cartKey, JSON.stringify(cart));
     loadCart();
+    updateCartCount();
 }
 
-// REMOVE ITEM
+// ===== REMOVE ITEM =====
 function removeItem(index) {
-    let cart = JSON.parse(localStorage.getItem("cart"));
-
+    let cart = JSON.parse(localStorage.getItem(cartKey));
     cart.splice(index, 1);
-
-    localStorage.setItem("cart", JSON.stringify(cart));
+    localStorage.setItem(cartKey, JSON.stringify(cart));
     loadCart();
+    updateCartCount();
 }
 
-// LOAD ON PAGE OPEN
-loadCart();
-
-
+// ===== CART COUNT =====
 function updateCartCount() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
+    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
     let totalItems = 0;
-
-    cart.forEach(item => {
-        totalItems += item.quantity;
-    });
-
+    cart.forEach(item => totalItems += item.quantity);
     document.getElementById("cart-count").innerText = totalItems;
 }
 
@@ -149,87 +138,39 @@ function goToCart() {
     window.location.href = "cart.html";
 }
 
-// Run on page load
-updateCartCount();
-
-
+// ===== WHATSAPP CHECKOUT =====
 function checkoutWhatsApp() {
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-
-    if (cart.length === 0) {
-        alert("Your cart is empty");
-        return;
-    }
+    let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+    if (cart.length === 0) { alert("Your cart is empty"); return; }
 
     let message = "Hello, I want to order:%0A%0A";
-
     let total = 0;
-
     cart.forEach(item => {
         message += `${item.name} - ₦${item.price} x ${item.quantity}%0A`;
         total += item.price * item.quantity;
     });
-
-    message += `%0ATotal: ₦${total}`;
-
-    let phoneNumber = "2347078709384"; // 👉 PUT YOUR NUMBER HERE
-
-    let url = `https://wa.me/${2347078709384}?text=${message}`;
-
-    window.open(url, "_blank");
-}
-      
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    if (loggedInUser) {
-        document.querySelectorAll(".sign").forEach(btn => btn.style.display = "none");
-        const header = document.querySelector("header");
-        const greeting = document.createElement("span");
-        greeting.style.cssText = "color:#F5A623; font-weight:bold; font-size:14px;";
-        greeting.innerHTML = `👤 ${loggedInUser.name} | <a href="#" onclick="logout()" style="color:#E63946;">Logout</a>`;
-        header.appendChild(greeting);
-    }
-
-    function logout() {
-        localStorage.removeItem("loggedInUser");
-        location.reload();
-    }
-function addToCart(name, price, image) {
-    const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-    
-    // Block if not logged in
-    if (!loggedInUser) {
-        alert("Please sign in to add items to your cart.");
-        window.location.href = "signin.html";
-        return;
-    }
-
-    let cart = JSON.parse(localStorage.getItem("cart")) || [];
-    cart.push({ name, price, image, quantity: 1 });
-    localStorage.setItem("cart", JSON.stringify(cart));
-    alert("Added to cart!");
-    updateCartCount();
+    message += `%0ATotal: ₦${total.toLocaleString()}`;
+    window.open(`https://wa.me/2347078709384?text=${message}`, "_blank");
 }
 
-      // Redirect to signin if not logged in
-const loggedInUser = JSON.parse(localStorage.getItem("loggedInUser"));
-if (!loggedInUser) {
-    alert("Please sign in to view your cart.");
-    window.location.href = "signin.html";
+// ===== HEADER GREETING =====
+function logout() {
+    localStorage.removeItem("loggedInUser");
+    location.reload();
 }
 
-      if (!loggedInUser) {
-    localStorage.setItem("redirectAfterLogin", window.location.href);
-    alert("Please sign in to add items to your cart.");
-    window.location.href = "signin.html";
-    return;
+if (loggedInUser) {
+    document.querySelectorAll(".sign").forEach(btn => btn.style.display = "none");
+    const header = document.querySelector("header");
+    const greeting = document.createElement("span");
+    greeting.style.cssText = "color:#F5A623; font-weight:bold; font-size:14px;";
+    greeting.innerHTML = `👤 ${loggedInUser.name} | <a href="#" onclick="logout()" style="color:#E63946;">Logout</a>`;
+    header.appendChild(greeting);
 }
-      // Save cart per user
-const cartKey = "cart_" + loggedInUser.email;
-let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
-cart.push({ name, price, image, quantity: 1 });
-localStorage.setItem(cartKey, JSON.stringify(cart));
-      const cartKey = "cart_" + loggedInUser.email;
-let cart = JSON.parse(localStorage.getItem(cartKey)) || [];
+
+// ===== RUN ON LOAD =====
+loadCart();
+updateCartCount();
 </script>
 </body>
 </html>
